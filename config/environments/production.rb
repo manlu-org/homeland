@@ -67,14 +67,24 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: Setting.domain, protocol: Setting.protocol }
+  # config.action_mailer.default_url_options = { host: Setting.domain, protocol: Setting.protocol }
 
   config.action_mailer.delivery_method   = Setting.mailer_provider.to_sym
-  if Setting.mailer_provider == 'postmark'
-    config.action_mailer.postmark_settings = Setting.mailer_options.deep_symbolize_keys
-  else
-    config.action_mailer.smtp_settings = Setting.mailer_options.deep_symbolize_keys
-  end
+  # if Setting.mailer_provider == 'postmark'
+  #   config.action_mailer.postmark_settings = Setting.mailer_options.deep_symbolize_keys
+  # else
+  #   config.action_mailer.smtp_settings = Setting.mailer_options.deep_symbolize_keys
+  # end
+  config.action_mailer.smtp_settings = {
+    :address              => Setting.mailer_options['address'],
+    :port                 => Setting.mailer_options['port'].to_i,
+    :domain               => Setting.mailer_options['domain'],
+    :user_name            => Setting.mailer_options['user_name'],
+    :password             => Setting.mailer_options['password'],
+    :authentication       => :login,
+    # :enable_starttls_auto => true
+    :ssl                  => true
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
