@@ -14,7 +14,7 @@ class Topic < ApplicationRecord
   include SoftDelete
   include Mentionable
   include Closeable
-  include Searchable
+  # include Searchable
   include MentionTopic
   include UserAvatarDelegate
 
@@ -56,10 +56,10 @@ class Topic < ApplicationRecord
     exclude_column_ids("node_id", ids)
   }
 
-  mapping do
-    indexes :title, term_vector: :yes
-    indexes :body, term_vector: :yes
-  end
+  # mapping do
+  #   indexes :title, term_vector: :yes
+  #   indexes :body, term_vector: :yes
+  # end
 
   def as_indexed_json(_options = {})
     {
@@ -73,24 +73,24 @@ class Topic < ApplicationRecord
   end
 
   def related_topics(size = 5)
-    opts = {
-      query: {
-        more_like_this: {
-          fields: [:title, :body],
-          like: [
-            {
-              _index: self.class.index_name,
-              _type: self.class.document_type,
-              _id: id
-            }
-          ],
-          min_term_freq: 2,
-          min_doc_freq: 5
-        }
-      },
-      size: size
-    }
-    self.class.__elasticsearch__.search(opts).records.to_a
+    # opts = {
+    #   query: {
+    #     more_like_this: {
+    #       fields: [:title, :body],
+    #       like: [
+    #         {
+    #           _index: self.class.index_name,
+    #           _type: self.class.document_type,
+    #           _id: id
+    #         }
+    #       ],
+    #       min_term_freq: 2,
+    #       min_doc_freq: 5
+    #     }
+    #   },
+    #   size: size
+    # }
+    # self.class.__elasticsearch__.search(opts).records.to_a
   end
 
   def self.fields_for_list
