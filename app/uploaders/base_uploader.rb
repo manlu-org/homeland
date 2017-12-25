@@ -35,10 +35,10 @@ class BaseUploader < CarrierWave::Uploader::Base
     case Setting.upload_provider
     when "aliyun"
       super(thumb: "?x-oss-process=image/#{aliyun_thumb_key(version_name)}")
+    when "qiniu"
+      [@url, "imageView2/1/#{qiniu_thumb_key(version_name)}"].join('?')
     when "upyun"
       [@url, version_name].join("!")
-    when "qiniu"
-        super(thumb: "?imageView2/0/#{qiniu_thumb_key(version_name)}")
     else
       [@url, version_name].join("!")
     end
