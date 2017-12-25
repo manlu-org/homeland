@@ -9,6 +9,8 @@ tmp/**/*
 .sass-cache/
 .yardoc/
 public/assets/
+config/deploy.rb
+config/deploy/production.rb
 config/database.yml
 config/mongoid.yml
 config/config.yml

@@ -36,9 +36,10 @@ gem 'bulk_insert'
 
 # 上传组件
 gem 'carrierwave'
-# Aliyun / Upyun 可选项
+# Aliyun / Upyun / Qiniu 可选项
 gem 'carrierwave-upyun'
 gem 'carrierwave-aliyun'
+gem 'carrierwave-qiniu', '~> 1.1.5'
 # Lazy load
 gem 'mini_magick', require: false
 
@@ -144,6 +145,10 @@ group :development, :test do
   gem 'letter_opener'
   gem 'yard'
   gem "capistrano", "~> 3.10"
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler', '~> 1.3'
+  gem 'capistrano-rails', '~> 1.3'
+  gem 'capistrano3-puma'
 
   gem 'codecov', require: false
 end

@@ -37,12 +37,26 @@ class BaseUploader < CarrierWave::Uploader::Base
       super(thumb: "?x-oss-process=image/#{aliyun_thumb_key(version_name)}")
     when "upyun"
       [@url, version_name].join("!")
+    when "qiniu"
+        super(thumb: "?imageView2/0/#{qiniu_thumb_key(version_name)}")
     else
       [@url, version_name].join("!")
     end
   end
 
   private
+
+  def qiniu_thumb_key(version_name)
+    case version_name
+    when "large" then "w/1920"
+    when "lg"    then "w/192/h/192"
+    when "md"    then "w/96/h/96"
+    when "sm"    then "w/48/h/48"
+    when "xs"    then "w/32/h/32"
+    else
+      "w/32/h/32"
+    end
+  end
 
   def aliyun_thumb_key(version_name)
     case version_name
